@@ -5,13 +5,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
+import com.example.uii_t8_demo_de_prototipo_funcional.ui.navigation.AppNavigation
 import com.example.uii_t8_demo_de_prototipo_funcional.ui.theme.UII_T8_Demo_de_prototipo_funcionalTheme
+import com.example.uii_t8_demo_de_prototipo_funcional.viewmodel.MainViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,11 +21,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             UII_T8_Demo_de_prototipo_funcionalTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    AppContent()
                 }
             }
         }
@@ -31,17 +33,12 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-//hola
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    UII_T8_Demo_de_prototipo_funcionalTheme {
-        Greeting("Android")
-    }
+fun AppContent() {
+    val viewModel: MainViewModel = viewModel()
+    val navController = rememberNavController()
+    
+    // Inicializar datos de ejemplo
+    viewModel.initializeExampleData()
+    
+    AppNavigation(navController = navController, viewModel = viewModel)
 }
