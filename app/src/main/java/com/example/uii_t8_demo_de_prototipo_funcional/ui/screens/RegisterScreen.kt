@@ -9,21 +9,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.clickable
-import androidx.compose.ui.graphics.Color
 import com.example.uii_t8_demo_de_prototipo_funcional.R
 import com.example.uii_t8_demo_de_prototipo_funcional.ui.components.*
 
 @Composable
 fun RegisterScreen(
     onRegisterClick: () -> Unit,
-    onBackClick: () -> Unit,
-    onForgotPasswordClick: () -> Unit = {}
+    onBackClick: () -> Unit
 ) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -31,7 +27,7 @@ fun RegisterScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(40.dp))
-        
+
         // Icono de usuario
         Image(
             painter = painterResource(id = R.drawable.icono),
@@ -40,7 +36,7 @@ fun RegisterScreen(
                 .size(120.dp)
                 .padding(bottom = 16.dp)
         )
-        
+
         // Título
         Text(
             text = "Registro",
@@ -48,7 +44,7 @@ fun RegisterScreen(
             modifier = Modifier.padding(bottom = 32.dp),
             textAlign = TextAlign.Center
         )
-        
+
         // Campo de nombre
         InputField(
             value = username,
@@ -58,7 +54,7 @@ fun RegisterScreen(
                 .fillMaxWidth()
                 .padding(bottom = 24.dp)
         )
-        
+
         // Campo de contraseña
         PasswordField(
             value = password,
@@ -66,18 +62,9 @@ fun RegisterScreen(
             label = "Contraseña",
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 8.dp)
-        )
-        
-        // Enlace "Olvide mi contraseña"
-        TextLinkAction(
-            text = "Olvide mi contraseña",
-            onClick = onForgotPasswordClick,
-            modifier = Modifier
-                .align(Alignment.Start)
                 .padding(bottom = 24.dp)
         )
-        
+
         // Botón de registrarse
         PrimaryButton(
             text = "Registrarse",

@@ -18,7 +18,7 @@ object Routes {
     const val ADD_ITEM = "add_item"
     const val EDIT_ITEM = "edit_item/{itemId}"
     const val DETAIL_ITEM = "detail_item/{itemId}"
-    
+
     // Funciones para construir rutas con parámetros
     fun editItem(itemId: Int) = "edit_item/$itemId"
     fun detailItem(itemId: Int) = "detail_item/$itemId"
@@ -39,16 +39,15 @@ fun AppNavigation(navController: NavHostController, viewModel: MainViewModel) {
                 onForgotPasswordClick = { navController.navigate(Routes.FORGOT_PASSWORD) }
             )
         }
-        
+
         // Pantalla de Registro
         composable(Routes.REGISTER) {
             RegisterScreen(
                 onRegisterClick = { navController.navigate(Routes.LOGIN) },
-                onBackClick = { navController.popBackStack() },
-                onForgotPasswordClick = { navController.navigate(Routes.FORGOT_PASSWORD) }
+                onBackClick = { navController.popBackStack() }
             )
         }
-        
+
         // Pantalla de Recuperación de Contraseña
         composable(Routes.FORGOT_PASSWORD) {
             ForgotPasswordScreen(
@@ -56,7 +55,7 @@ fun AppNavigation(navController: NavHostController, viewModel: MainViewModel) {
                 onBackClick = { navController.popBackStack() }
             )
         }
-        
+
         // Pantalla Principal (Home)
         composable(Routes.HOME) {
             HomeScreen(
@@ -71,7 +70,7 @@ fun AppNavigation(navController: NavHostController, viewModel: MainViewModel) {
                 }
             )
         }
-        
+
         // Pantalla para Agregar Item
         composable(Routes.ADD_ITEM) {
             AddPetScreen(
@@ -79,27 +78,27 @@ fun AppNavigation(navController: NavHostController, viewModel: MainViewModel) {
                 onCancelClick = { navController.popBackStack() }
             )
         }
-        
+
         // Pantalla para Editar Item
         composable(
             route = Routes.EDIT_ITEM,
             arguments = listOf(navArgument("itemId") { type = NavType.IntType })
         ) { backStackEntry ->
             val itemId = backStackEntry.arguments?.getInt("itemId")
-            
+
             EditPetScreen(
                 onAcceptClick = { navController.navigate(Routes.HOME) },
                 onCancelClick = { navController.popBackStack() }
             )
         }
-        
+
         // Pantalla de Detalle de Item
         composable(
             route = Routes.DETAIL_ITEM,
             arguments = listOf(navArgument("itemId") { type = NavType.IntType })
         ) { backStackEntry ->
             val itemId = backStackEntry.arguments?.getInt("itemId") ?: 0
-            
+
             DetailScreen(
                 viewModel = viewModel,
                 itemId = itemId,
