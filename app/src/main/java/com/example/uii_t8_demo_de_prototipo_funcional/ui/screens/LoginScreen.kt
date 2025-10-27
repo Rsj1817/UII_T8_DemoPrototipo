@@ -23,7 +23,7 @@ fun LoginScreen(
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -39,7 +39,7 @@ fun LoginScreen(
                 .size(120.dp)
                 .padding(bottom = 32.dp)
         )
-        
+
         // Campos de entrada
         OutlinedTextField(
             value = username,
@@ -50,18 +50,27 @@ fun LoginScreen(
                 .padding(bottom = 16.dp),
             singleLine = true
         )
-        
+
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
             label = { Text("Contraseña") },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 24.dp),
+                .padding(bottom = 8.dp),
             singleLine = true,
             visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation()
         )
-        
+
+        // Enlace para cambiar/recuperar contraseña (aparece en la ventana principal)
+        TextLinkAction(
+            text = "Cambiar contraseña",
+            onClick = onForgotPasswordClick,
+            modifier = Modifier
+                .align(Alignment.Start)
+                .padding(bottom = 24.dp)
+        )
+
         // Mensaje de error
         if (errorMessage.isNotEmpty()) {
             Text(
@@ -71,7 +80,7 @@ fun LoginScreen(
                 modifier = Modifier.padding(bottom = 16.dp)
             )
         }
-        
+
         // Botón de inicio de sesión
         Button(
             onClick = {
@@ -95,7 +104,7 @@ fun LoginScreen(
         ) {
             Text("Iniciar sesión")
         }
-        
+
         // Botón de registro
         Button(
             onClick = onRegisterClick,
