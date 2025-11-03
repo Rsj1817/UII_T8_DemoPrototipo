@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.ui.Alignment
 
+
 // PrimaryButton - Componente reutilizable para acciones principales
 @Composable
 fun PrimaryButton(
@@ -36,6 +37,7 @@ fun PrimaryButton(
     }
 }
 
+
 // SecondaryButton - Componente reutilizable para acciones secundarias
 @Composable
 fun SecondaryButton(
@@ -53,6 +55,7 @@ fun SecondaryButton(
     }
 }
 
+
 // LabelText - Componente reutilizable para mostrar texto
 @Composable
 fun LabelText(
@@ -65,6 +68,7 @@ fun LabelText(
         modifier = modifier.padding(bottom = 4.dp)
     )
 }
+
 
 // InputField - Componente reutilizable para capturar texto
 @Composable
@@ -98,6 +102,7 @@ fun InputField(
         }
     }
 }
+
 
 // PasswordField - Componente para campos de contraseña
 @Composable
@@ -141,6 +146,7 @@ fun PasswordField(
     }
 }
 
+
 // DropdownInput - Componente para selección de lista
 @Composable
 fun DropdownInput(
@@ -183,6 +189,7 @@ fun DropdownInput(
     }
 }
 
+
 // TextLinkAction - Componente para enlaces de texto
 @Composable
 fun TextLinkAction(
@@ -200,6 +207,7 @@ fun TextLinkAction(
         )
     }
 }
+
 
 // SearchBar - Componente para búsqueda
 @Composable
