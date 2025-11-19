@@ -1,67 +1,103 @@
 package com.example.uii_t8_demo_de_prototipo_funcional.viewmodel
 
+import android.app.Application
 import androidx.compose.runtime.mutableStateListOf
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.uii_t8_demo_de_prototipo_funcional.data.ItemRepository
 import com.example.uii_t8_demo_de_prototipo_funcional.model.Item
 import com.example.uii_t8_demo_de_prototipo_funcional.model.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class MainViewModel : ViewModel() {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
+    // Inicializamos el repository con el Application (es Context)
+    private val repository: ItemRepository = ItemRepository(getApplication())
+
+    // Lista observable para Compose
     private val _items = mutableStateListOf<Item>()
     val items: List<Item> get() = _items
 
-    // Lista de usuarios para login (hardcoded)
+    // Usuarios en memoria para login simple
     private val _users = mutableStateListOf<User>()
     val users: List<User> get() = _users
 
-    // Estado de autenticación
     private var _isAuthenticated = false
     val isAuthenticated: Boolean get() = _isAuthenticated
 
     init {
-        // Inicialización básica
+        // Usuario de ejemplo
         _users.add(User("admin", "admin", "admin@example.com"))
+        // Carga inicial desde la BD
+        refreshItemsFromDb()
     }
-    
-    // Función para inicializar datos de ejemplo
-    fun initializeExampleData() {
-        if (_items.isEmpty()) {
-            _items.addAll(
-                listOf(
-                    Item(1, "Rudy", "Raza: Labrador Retriever | Género: Macho | Edad: 3 años", "Perro"),
-                    Item(2, "Mimi", "Raza: Siamés | Género: Hembra | Edad: 2 años", "Gato"),
-                    Item(3, "Rocky", "Raza: Bulldog | Género: Macho | Edad: 5 años", "Perro"),
-                    Item(4, "Lola", "Raza: Golden Retriever | Género: Hembra | Edad: 4 años", "Perro"),
-                    Item(5, "Paco", "Raza: Periquito | Género: Macho | Edad: 1 año", "Ave")
-                )
-            )
+
+    private fun refreshItemsFromDb() {
+        viewModelScope.launch {
+            val list = withContext(Dispatchers.IO) {
+                repository.getAll()
+            }
+            _items.clear()
+            _items.addAll(list)
         }
     }
 
-    // Función para validar login
+    /**
+     * Login simple (usa la lista en memoria)
+     */
     fun login(username: String, password: String): Boolean {
         val user = _users.find { it.username == username && it.password == password }
         _isAuthenticated = user != null
         return _isAuthenticated
     }
 
-    // Funciones CRUD (simuladas)
-    fun addItem(item: Item) {
-        _items.add(item)
-    }
-
-    fun updateItem(item: Item) {
-        val index = _items.indexOfFirst { it.id == item.id }
-        if (index >= 0) {
-            _items[index] = item
+    /**
+     * CREATE
+     * onComplete devuelve el id insertado por si quieres usarlo
+     */
+    fun addItem(item: Item, onComplete: ((Long) -> Unit)? = null) {
+        viewModelScope.launch {
+            val id = withContext(Dispatchers.IO) {
+                repository.insert(item)
+            }
+            // refrescar la lista para que Compose actualice la UI
+            refreshItemsFromDb()
+            onComplete?.invoke(id)
         }
     }
 
-    fun deleteItem(id: Int) {
-        _items.removeIf { it.id == id }
+    /**
+     * UPDATE
+     */
+    fun updateItem(item: Item, onComplete: ((Int) -> Unit)? = null) {
+        viewModelScope.launch {
+            val rows = withContext(Dispatchers.IO) {
+                repository.update(item)
+            }
+            refreshItemsFromDb()
+            onComplete?.invoke(rows)
+        }
     }
-    
-    fun getItemById(id: Int): Item? {
+
+    /**
+     * DELETE
+     */
+    fun deleteItem(id: Long, onComplete: ((Int) -> Unit)? = null) {
+        viewModelScope.launch {
+            val rows = withContext(Dispatchers.IO) {
+                repository.delete(id)
+            }
+            refreshItemsFromDb()
+            onComplete?.invoke(rows)
+        }
+    }
+
+    /**
+     * Helper para obtener un item desde la lista cargada (no accede directo a DB)
+     */
+    fun getItemById(id: Long): Item? {
         return _items.find { it.id == id }
     }
 }

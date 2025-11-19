@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.uii_t8_demo_de_prototipo_funcional.R
 import com.example.uii_t8_demo_de_prototipo_funcional.ui.components.*
@@ -20,7 +19,7 @@ fun ForgotPasswordScreen(
     onBackClick: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -28,8 +27,7 @@ fun ForgotPasswordScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(40.dp))
-        
-        // Icono de usuario
+
         Image(
             painter = painterResource(id = R.drawable.icono),
             contentDescription = "User Icon",
@@ -37,16 +35,14 @@ fun ForgotPasswordScreen(
                 .size(120.dp)
                 .padding(bottom = 16.dp)
         )
-        
-        // Título
+
         Text(
             text = "Recuperacion de Contraseña",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 16.dp),
             textAlign = TextAlign.Center
         )
-        
-        // Instrucciones
+
         Text(
             text = "Ingresa tu correo para recibir instrucciones",
             modifier = Modifier
@@ -54,8 +50,7 @@ fun ForgotPasswordScreen(
                 .padding(bottom = 16.dp),
             textAlign = TextAlign.Start
         )
-        
-        // Campo de correo
+
         InputField(
             value = email,
             onValueChange = { email = it },
@@ -65,8 +60,7 @@ fun ForgotPasswordScreen(
                 .fillMaxWidth()
                 .padding(bottom = 24.dp)
         )
-        
-        // Botón de enviar (sin funcionalidad real)
+
         PrimaryButton(
             text = "Enviar enlace de recuperacion",
             onClick = onSubmitClick,
@@ -74,10 +68,9 @@ fun ForgotPasswordScreen(
                 .fillMaxWidth()
                 .height(48.dp)
         )
-        
+
         Spacer(modifier = Modifier.height(12.dp))
-        
-        // Botón de cancelar y regresar
+
         SecondaryButton(
             text = "Cancelar y regresar",
             onClick = onBackClick,

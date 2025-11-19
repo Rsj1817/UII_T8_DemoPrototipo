@@ -8,10 +8,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.uii_t8_demo_de_prototipo_funcional.ui.components.*
+import com.example.uii_t8_demo_de_prototipo_funcional.viewmodel.MainViewModel
+import com.example.uii_t8_demo_de_prototipo_funcional.model.Item
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddPetScreen(
+    viewModel: MainViewModel,
     onSaveClick: () -> Unit,
     onCancelClick: () -> Unit
 ) {
@@ -26,9 +29,7 @@ fun AddPetScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Agregar Nueva Mascota") }
-            )
+            TopAppBar(title = { Text("Agregar Nueva Mascota") })
         }
     ) { paddingValues ->
         Column(
@@ -38,64 +39,46 @@ fun AddPetScreen(
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Nombre de la mascota
+            // ... campos (igual que tu versión)
             InputField(
                 value = petName,
                 onValueChange = { petName = it },
                 label = "Nombre de la mascota",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
             )
 
-            // Especie
             DropdownInput(
                 selectedOption = species,
                 options = speciesOptions,
                 onOptionSelected = { species = it },
                 label = "Especie",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
             )
 
-            // Raza
             InputField(
                 value = breed,
                 onValueChange = { breed = it },
                 label = "Raza",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
             )
 
-            // Edad (Años)
             InputField(
                 value = age,
                 onValueChange = { age = it },
                 label = "Edad (Años)",
                 keyboardType = KeyboardType.Number,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
             )
 
-            // Genero
             DropdownInput(
                 selectedOption = gender,
                 options = genderOptions,
                 onOptionSelected = { gender = it },
                 label = "Genero",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 24.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)
             )
 
-            // Botones
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
                 SecondaryButton(
                     text = "Cancelar y regresar",
                     onClick = onCancelClick,
@@ -106,7 +89,20 @@ fun AddPetScreen(
 
                 PrimaryButton(
                     text = "Agregar Mascota",
-                    onClick = { onSaveClick() },
+                    onClick = {
+                        val desc = "Raza: $breed | Género: $gender | Edad: ${if (age.isBlank()) "N/A" else "$age años"}"
+                        val category = species.ifBlank { "Otro" }
+                        val item = Item(
+                            id = 0L,
+                            name = petName.ifBlank { "Sin nombre" },
+                            description = desc,
+                            category = category
+                        )
+                        viewModel.addItem(item) { newId ->
+                            // opcional: puedes mostrar un Toast con newId
+                        }
+                        onSaveClick()
+                    },
                     modifier = Modifier.weight(1f)
                 )
             }

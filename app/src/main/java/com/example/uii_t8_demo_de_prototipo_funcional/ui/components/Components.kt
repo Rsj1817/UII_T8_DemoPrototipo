@@ -5,7 +5,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -16,8 +15,6 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.ui.Alignment
 
-
-// PrimaryButton - Componente reutilizable para acciones principales
 @Composable
 fun PrimaryButton(
     text: String,
@@ -37,8 +34,6 @@ fun PrimaryButton(
     }
 }
 
-
-// SecondaryButton - Componente reutilizable para acciones secundarias
 @Composable
 fun SecondaryButton(
     text: String,
@@ -55,8 +50,6 @@ fun SecondaryButton(
     }
 }
 
-
-// LabelText - Componente reutilizable para mostrar texto
 @Composable
 fun LabelText(
     text: String,
@@ -69,8 +62,6 @@ fun LabelText(
     )
 }
 
-
-// InputField - Componente reutilizable para capturar texto
 @Composable
 fun InputField(
     value: String,
@@ -103,8 +94,6 @@ fun InputField(
     }
 }
 
-
-// PasswordField - Componente para campos de contraseña
 @Composable
 fun PasswordField(
     value: String,
@@ -115,7 +104,7 @@ fun PasswordField(
     errorMessage: String = ""
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
-    
+
     Column(modifier = modifier.fillMaxWidth()) {
         OutlinedTextField(
             value = value,
@@ -146,8 +135,6 @@ fun PasswordField(
     }
 }
 
-
-// DropdownInput - Componente para selección de lista
 @Composable
 fun DropdownInput(
     selectedOption: String,
@@ -157,7 +144,7 @@ fun DropdownInput(
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
-    
+
     Column(modifier = modifier.fillMaxWidth()) {
         LabelText(text = label)
         Box {
@@ -189,8 +176,6 @@ fun DropdownInput(
     }
 }
 
-
-// TextLinkAction - Componente para enlaces de texto
 @Composable
 fun TextLinkAction(
     text: String,
@@ -208,8 +193,6 @@ fun TextLinkAction(
     }
 }
 
-
-// SearchBar - Componente para búsqueda
 @Composable
 fun SearchBar(
     query: String,

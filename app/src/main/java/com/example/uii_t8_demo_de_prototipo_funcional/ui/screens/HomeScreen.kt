@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ExitToApp
-
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -32,36 +31,30 @@ fun HomeScreen(
 ) {
     var searchQuery by remember { mutableStateOf("") }
     val items = viewModel.items
-    
+
     val filteredItems = if (searchQuery.isBlank()) {
         items
     } else {
-        items.filter { 
-            it.name.contains(searchQuery, ignoreCase = true) || 
-            it.description.contains(searchQuery, ignoreCase = true) 
+        items.filter {
+            it.name.contains(searchQuery, ignoreCase = true) ||
+                    it.description.contains(searchQuery, ignoreCase = true)
         }
     }
-    
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Inicio") },
                 actions = {
                     IconButton(onClick = onLogoutClick) {
-                        Icon(
-                            imageVector = Icons.Default.ExitToApp,
-                            contentDescription = "Cerrar sesión"
-                        )
+                        Icon(imageVector = Icons.Default.ExitToApp, contentDescription = "Cerrar sesión")
                     }
                 }
             )
         },
         floatingActionButton = {
             FloatingActionButton(onClick = onAddClick) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Agregar"
-                )
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Agregar")
             }
         }
     ) { paddingValues ->
@@ -71,7 +64,6 @@ fun HomeScreen(
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            // Hero text
             Text(
                 text = "Encuentra a tu mejor amigo con nosotros",
                 style = MaterialTheme.typography.headlineLarge,
@@ -80,8 +72,7 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)
             )
-            
-            // Imagen de mascotas
+
             Image(
                 painter = painterResource(id = R.drawable.mascotas),
                 contentDescription = "Mascotas",
@@ -91,16 +82,14 @@ fun HomeScreen(
                     .padding(bottom = 16.dp),
                 contentScale = ContentScale.Fit
             )
-            
-            // Barra de búsqueda
+
             SearchBar(
                 query = searchQuery,
                 onQueryChange = { searchQuery = it },
                 onSearch = { /* No se necesita acción adicional */ },
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-            
-            // Lista de items
+
             if (filteredItems.isEmpty()) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -113,7 +102,7 @@ fun HomeScreen(
                     items(filteredItems) { item ->
                         ItemCard(
                             item = item,
-                            onClick = { onItemClick(item.id) }
+                            onClick = { onItemClick(item.id.toInt()) } // convertir Long -> Int para navegación
                         )
                     }
                 }
@@ -133,23 +122,12 @@ fun ItemCard(
             .padding(vertical = 8.dp)
             .clickable(onClick = onClick)
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(
-                text = item.name,
-                style = MaterialTheme.typography.titleMedium
-            )
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = item.name, style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = item.description,
-                style = MaterialTheme.typography.bodyMedium
-            )
+            Text(text = item.description, style = MaterialTheme.typography.bodyMedium)
             Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Categoría: ${item.category}",
-                style = MaterialTheme.typography.bodySmall
-            )
+            Text(text = "Categoría: ${item.category}", style = MaterialTheme.typography.bodySmall)
         }
     }
 }

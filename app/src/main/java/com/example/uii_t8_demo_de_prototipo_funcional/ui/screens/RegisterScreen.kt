@@ -28,7 +28,6 @@ fun RegisterScreen(
     ) {
         Spacer(modifier = Modifier.height(40.dp))
 
-        // Icono de usuario
         Image(
             painter = painterResource(id = R.drawable.icono),
             contentDescription = "User Icon",
@@ -37,7 +36,6 @@ fun RegisterScreen(
                 .padding(bottom = 16.dp)
         )
 
-        // Título
         Text(
             text = "Registro",
             style = MaterialTheme.typography.headlineMedium,
@@ -45,7 +43,6 @@ fun RegisterScreen(
             textAlign = TextAlign.Center
         )
 
-        // Campo de nombre
         InputField(
             value = username,
             onValueChange = { username = it },
@@ -55,7 +52,6 @@ fun RegisterScreen(
                 .padding(bottom = 24.dp)
         )
 
-        // Campo de contraseña
         PasswordField(
             value = password,
             onValueChange = { password = it },
@@ -65,7 +61,6 @@ fun RegisterScreen(
                 .padding(bottom = 24.dp)
         )
 
-        // Botón de registrarse
         PrimaryButton(
             text = "Registrarse",
             onClick = onRegisterClick,

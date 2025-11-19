@@ -15,11 +15,10 @@ fun EditPetScreen(
     onAcceptClick: () -> Unit,
     onCancelClick: () -> Unit
 ) {
-    // Valores iniciales de ejemplo (sin funcionalidad real)
     var petName by remember { mutableStateOf("Rudy") }
     var species by remember { mutableStateOf("Perro") }
     var breed by remember { mutableStateOf("Labrador Retriever") }
-    var age by remember { mutableStateOf("5 Años") }
+    var age by remember { mutableStateOf("5") }
     var gender by remember { mutableStateOf("Macho") }
 
     val speciesOptions = listOf("Perro", "Gato", "Ave", "Reptil", "Otro")
@@ -27,9 +26,7 @@ fun EditPetScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Editar Mascota Existente") }
-            )
+            TopAppBar(title = { Text("Editar Mascota Existente") })
         }
     ) { paddingValues ->
         Column(
@@ -39,60 +36,54 @@ fun EditPetScreen(
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Nombre de la mascota
             InputField(
                 value = petName,
                 onValueChange = { petName = it },
                 label = "Nombre de la mascota",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
+                modifier = Modifier.fillMaxWidth()
             )
 
-            // Especie
+            Spacer(Modifier.height(16.dp))
+
             DropdownInput(
                 selectedOption = species,
                 options = speciesOptions,
                 onOptionSelected = { species = it },
                 label = "Especie",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
+                modifier = Modifier.fillMaxWidth()
             )
 
-            // Raza
+            Spacer(Modifier.height(16.dp))
+
             InputField(
                 value = breed,
                 onValueChange = { breed = it },
                 label = "Raza",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
+                modifier = Modifier.fillMaxWidth()
             )
 
-            // Edad (Años)
+            Spacer(Modifier.height(16.dp))
+
             InputField(
                 value = age,
                 onValueChange = { age = it },
                 label = "Edad (Años)",
                 keyboardType = KeyboardType.Number,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
+                modifier = Modifier.fillMaxWidth()
             )
 
-            // Genero
+            Spacer(Modifier.height(16.dp))
+
             DropdownInput(
                 selectedOption = gender,
                 options = genderOptions,
                 onOptionSelected = { gender = it },
-                label = "Genero",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 24.dp)
+                label = "Género",
+                modifier = Modifier.fillMaxWidth()
             )
 
-            // Botones
+            Spacer(Modifier.height(24.dp))
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly

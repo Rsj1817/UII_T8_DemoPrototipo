@@ -20,9 +20,9 @@ fun DetailScreen(
     onDeleteClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
-    val item = viewModel.getItemById(itemId)
+    val item = viewModel.getItemById(itemId.toLong())
     var showDeleteDialog by remember { mutableStateOf(false) }
-    
+
     if (item == null) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -32,23 +32,17 @@ fun DetailScreen(
         }
         return
     }
-    
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Detalles") },
                 actions = {
                     IconButton(onClick = { onEditClick(itemId) }) {
-                        Icon(
-                            imageVector = Icons.Default.Edit,
-                            contentDescription = "Editar"
-                        )
+                        Icon(imageVector = Icons.Default.Edit, contentDescription = "Editar")
                     }
                     IconButton(onClick = { showDeleteDialog = true }) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "Eliminar"
-                        )
+                        Icon(imageVector = Icons.Default.Delete, contentDescription = "Eliminar")
                     }
                 }
             )
@@ -65,15 +59,13 @@ fun DetailScreen(
                     .fillMaxWidth()
                     .padding(vertical = 8.dp)
             ) {
-                Column(
-                    modifier = Modifier.padding(16.dp)
-                ) {
+                Column(modifier = Modifier.padding(16.dp)) {
                     Text(
                         text = item.name,
                         style = MaterialTheme.typography.headlineMedium,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
-                    
+
                     Text(
                         text = "Descripción:",
                         style = MaterialTheme.typography.titleMedium,
@@ -84,7 +76,7 @@ fun DetailScreen(
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
-                    
+
                     Text(
                         text = "Categoría:",
                         style = MaterialTheme.typography.titleMedium,
@@ -98,27 +90,22 @@ fun DetailScreen(
             }
         }
     }
-    
+
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
             title = { Text("Confirmar eliminación") },
             text = { Text("¿Estás seguro de que deseas eliminar este elemento?") },
             confirmButton = {
-                TextButton(
-                    onClick = {
-                        // Eliminar desactivado: solo cerrar y delegar navegación
-                        showDeleteDialog = false
-                        onDeleteClick()
-                    }
-                ) {
+                TextButton(onClick = {
+                    showDeleteDialog = false
+                    onDeleteClick()
+                }) {
                     Text("Eliminar")
                 }
             },
             dismissButton = {
-                TextButton(
-                    onClick = { showDeleteDialog = false }
-                ) {
+                TextButton(onClick = { showDeleteDialog = false }) {
                     Text("Cancelar")
                 }
             }

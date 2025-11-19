@@ -19,14 +19,14 @@ fun AddEditItemScreen(
     onCancelClick: () -> Unit
 ) {
     val isEditMode = itemId != null
-    val item = if (isEditMode) viewModel.getItemById(itemId!!) else null
-    
+    val item = if (isEditMode) viewModel.getItemById(itemId!!.toLong()) else null
+
     var name by remember { mutableStateOf(item?.name ?: "") }
     var description by remember { mutableStateOf(item?.description ?: "") }
     var category by remember { mutableStateOf(item?.category ?: "") }
-    
+
     val categories = listOf("Tarea", "Proyecto", "Recordatorio", "Evento", "Otro")
-    
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -41,7 +41,6 @@ fun AddEditItemScreen(
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Campos de entrada
             InputField(
                 value = name,
                 onValueChange = { name = it },
@@ -50,7 +49,7 @@ fun AddEditItemScreen(
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)
             )
-            
+
             InputField(
                 value = description,
                 onValueChange = { description = it },
@@ -59,7 +58,7 @@ fun AddEditItemScreen(
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)
             )
-            
+
             DropdownInput(
                 selectedOption = category,
                 options = categories,
@@ -69,8 +68,7 @@ fun AddEditItemScreen(
                     .fillMaxWidth()
                     .padding(bottom = 24.dp)
             )
-            
-            // Botones
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -80,16 +78,16 @@ fun AddEditItemScreen(
                     onClick = onCancelClick,
                     modifier = Modifier.weight(1f)
                 )
-                
+
                 Spacer(modifier = Modifier.width(16.dp))
-                
+
                 PrimaryButton(
                     text = if (isEditMode) "Guardar Cambios" else "Agregar",
                     onClick = {
                         if (isEditMode) {
                             viewModel.updateItem(
                                 Item(
-                                    id = itemId!!,
+                                    id = itemId!!.toLong(),
                                     name = name,
                                     description = description,
                                     category = category
@@ -98,7 +96,7 @@ fun AddEditItemScreen(
                         } else {
                             viewModel.addItem(
                                 Item(
-                                    id = 0, // El ViewModel asignará un ID
+                                    id = 0L, // id autogenerado
                                     name = name,
                                     description = description,
                                     category = category

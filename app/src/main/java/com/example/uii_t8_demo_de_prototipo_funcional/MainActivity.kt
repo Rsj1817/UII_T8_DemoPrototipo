@@ -36,9 +36,7 @@ class MainActivity : ComponentActivity() {
 fun AppContent() {
     val viewModel: MainViewModel = viewModel()
     val navController = rememberNavController()
-    
-    // Inicializar datos de ejemplo
-    viewModel.initializeExampleData()
-    
+
+    // NO: viewModel.initializeExampleData()
     AppNavigation(navController = navController, viewModel = viewModel)
 }

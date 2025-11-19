@@ -31,7 +31,6 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Icono de usuario
         Image(
             painter = painterResource(id = R.drawable.icono),
             contentDescription = "Icono de usuario",
@@ -40,7 +39,6 @@ fun LoginScreen(
                 .padding(bottom = 32.dp)
         )
 
-        // Campos de entrada
         OutlinedTextField(
             value = username,
             onValueChange = { username = it },
@@ -62,7 +60,6 @@ fun LoginScreen(
             visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation()
         )
 
-        // Enlace para cambiar/recuperar contraseña (aparece en la ventana principal)
         TextLinkAction(
             text = "Cambiar contraseña",
             onClick = onForgotPasswordClick,
@@ -71,7 +68,6 @@ fun LoginScreen(
                 .padding(bottom = 24.dp)
         )
 
-        // Mensaje de error
         if (errorMessage.isNotEmpty()) {
             Text(
                 text = errorMessage,
@@ -81,7 +77,6 @@ fun LoginScreen(
             )
         }
 
-        // Botón de inicio de sesión
         Button(
             onClick = {
                 if (username.isBlank() || password.isBlank()) {
@@ -98,20 +93,15 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            )
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
         ) {
             Text("Iniciar sesión")
         }
 
-        // Botón de registro
         Button(
             onClick = onRegisterClick,
             modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            )
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
         ) {
             Text("Registrarse")
         }
