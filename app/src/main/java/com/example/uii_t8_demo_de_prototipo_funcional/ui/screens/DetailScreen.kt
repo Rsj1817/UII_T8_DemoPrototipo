@@ -60,32 +60,13 @@ fun DetailScreen(
                     .padding(vertical = 8.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = item.name,
-                        style = MaterialTheme.typography.headlineMedium,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
+                    Text(text = item.name, style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(bottom = 16.dp))
 
-                    Text(
-                        text = "Descripción:",
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(bottom = 4.dp)
-                    )
-                    Text(
-                        text = item.description,
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
+                    Text(text = "Descripción:", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(bottom = 4.dp))
+                    Text(text = item.description, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(bottom = 16.dp))
 
-                    Text(
-                        text = "Categoría:",
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(bottom = 4.dp)
-                    )
-                    Text(
-                        text = item.category,
-                        style = MaterialTheme.typography.bodyLarge
-                    )
+                    Text(text = "Categoría:", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(bottom = 4.dp))
+                    Text(text = item.category, style = MaterialTheme.typography.bodyLarge)
                 }
             }
         }
@@ -98,6 +79,10 @@ fun DetailScreen(
             text = { Text("¿Estás seguro de que deseas eliminar este elemento?") },
             confirmButton = {
                 TextButton(onClick = {
+                    // Ejecutar delete en ViewModel (usa id Long)
+                    viewModel.deleteItem(item.id) {
+                        // opcional: manejar callback
+                    }
                     showDeleteDialog = false
                     onDeleteClick()
                 }) {

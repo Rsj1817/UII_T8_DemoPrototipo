@@ -73,12 +73,15 @@ fun AppNavigation(navController: NavHostController, viewModel: MainViewModel) {
             )
         }
 
+        // EDIT_ITEM: pasar viewModel y itemId a EditPetScreen
         composable(
             route = Routes.EDIT_ITEM,
             arguments = listOf(navArgument("itemId") { type = NavType.IntType })
         ) { backStackEntry ->
-            val itemId = backStackEntry.arguments?.getInt("itemId")
+            val itemId = backStackEntry.arguments?.getInt("itemId") ?: 0
             EditPetScreen(
+                viewModel = viewModel,
+                itemId = itemId,
                 onAcceptClick = { navController.navigate(Routes.HOME) },
                 onCancelClick = { navController.popBackStack() }
             )
